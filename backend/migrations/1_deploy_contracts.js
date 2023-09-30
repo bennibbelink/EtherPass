@@ -1,8 +1,7 @@
-const ConvertLib = artifacts.require("ConvertLib");
-const MetaCoin = artifacts.require("MetaCoin");
+const Proxy = artifacts.require("Proxy");
+const Registry = artifacts.require("Registry");
 
 module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, MetaCoin);
-  deployer.deploy(MetaCoin);
+  // deployer.link(Registry, Proxy);
+  deployer.deploy(Proxy);
 };
