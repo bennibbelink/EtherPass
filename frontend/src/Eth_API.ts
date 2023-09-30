@@ -6,15 +6,16 @@ import proxyInterface from '../../backend/build/contracts/Proxy.json'
 import registryInterface from '../../backend/build/contracts/Registry.json'
 import { createPublicClient, defineChain, http, createWalletClient, custom } from 'viem'
 import { mainnet } from 'viem/chains'
+import { Password } from './testData';
 
-type Password = {
-    id: number
-    nickname: string
-    password: string
-    username: string
-    domain: string
-    tag: number
-}
+// type Password = {
+//     id: number
+//     nickname: string
+//     password: string
+//     username: string
+//     domain: string
+//     tag: number
+// }
 
 const proxyAddr = "0xf257a986b4E211047c55972716832287d351F9C8"
 
@@ -39,17 +40,54 @@ const localchain = defineChain({
     },
 })
 const publicClient = createPublicClient({
+    batch: {
+        multicall: {
+            wait: 1000
+        }
+    },
     chain: localchain,
     transport: http()
 })
 const walletClient = createWalletClient({
-    chain: mainnet,
+    chain: localchain,
     transport: custom(window.ethereum)
 })
 const [account] = await walletClient.getAddresses()
 
-// const networkData = proxyInterface.networks[1337];
+export async function batchUpdate(adds: Password[], deletes: Password[], updates: Password[]) {
+    const registryAddress = await getRegistryAddress();
+    const registryContract = {
+        address: registryAddress,
+        abi: registryInterface.abi,
+    }
 
+    const results = await publicClient.multicall({
+        contracts: [
+            ...adds.map(p => {
+                return {
+                    ...registryContract,
+                    functionName: 'addPassword',
+                    args: [p.nickname, p.passwordText, p.username, p.domain, p.tag]
+                }
+            }),
+            ...updates.map(p => {
+                return {
+                    ...registryContract,
+                    functionName: 'updatePassword',
+                    args: [p.id, p.nickname, p.password, p.username, p.domain, p.tag]
+                }
+            }),
+            ...deletes.map(p => {
+                return {
+                    ...registryContract,
+                    functionName: 'deletePassword',
+                    args: [p.id]
+                }
+            })
+        ]
+    })
+    console.log('results', results)
+}
 
 
 export async function createRegistry() {
@@ -63,7 +101,7 @@ export async function createRegistry() {
     await walletClient.writeContract(request);
 }
 
-async function deleteRegistry() {
+export async function deleteRegistry() {
     const request = await walletClient.writeContract({
         account,
         address: proxyAddr,
@@ -111,7 +149,7 @@ async function deletePassword(id: number) {
     await walletClient.writeContract(request);
 }
 
-async function getPasswords() {
+export async function getPasswords() {
     const registryAddress = await getRegistryAddress();
     if (registryAddress === undefined) throw new Error("Registry address is undefined")
     const data = await publicClient.readContract({
