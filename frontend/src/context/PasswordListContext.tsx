@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Password, testPasswords } from "../testData";
 import * as EthAPI from "../Eth_API"
 
@@ -6,13 +6,15 @@ import * as EthAPI from "../Eth_API"
 interface PasswordListContextValue {
   passwordList: Password[];
   initialPasswordList: Password[];
+  commitChanges: () => void;
   setPasswordList?: React.Dispatch<React.SetStateAction<Password[]>>;
   setInitialPasswordList?: React.Dispatch<React.SetStateAction<Password[]>>;
 }
 
 const PasswordListContext = createContext<PasswordListContextValue>({
-  passwordList: testPasswords,
-  initialPasswordList: testPasswords,
+  commitChanges: () => {},
+  passwordList: [],
+  initialPasswordList: [],
 });
 
 const PasswordListContextProvider = ({
@@ -24,8 +26,19 @@ const PasswordListContextProvider = ({
   const [initialPasswordList, setInitialPasswordList] = useState<Password[]>(
     []
   );
+  const [hasRegistry, setHasRegistry] = useState<boolean>(false);
 
-  function commitChanges() {
+  useEffect(() => {
+    if (EthAPI.account) {
+      setHasRegistry(true);
+      EthAPI.getPasswords().then((passwords: Password[]) => {
+        setPasswordList(passwords);
+        setInitialPasswordList(passwords);
+      });
+    };
+  },[EthAPI.account])
+
+  const commitChanges = () => {
     const adds: Password[] = []
     const updates: Password[] = []
     const deletes: Password[] = []
@@ -66,6 +79,7 @@ const PasswordListContextProvider = ({
   return (
     <PasswordListContext.Provider
       value={{
+        commitChanges,
         initialPasswordList,
         passwordList,
         setPasswordList,

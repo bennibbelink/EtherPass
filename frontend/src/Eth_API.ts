@@ -52,7 +52,7 @@ const walletClient = createWalletClient({
     chain: localchain,
     transport: custom(window.ethereum)
 })
-const [account] = await walletClient.getAddresses()
+export const [account] = await walletClient.getAddresses()
 
 export async function batchUpdate(adds: Password[], deletes: Password[], updates: Password[]) {
     const registryAddress = await getRegistryAddress();
@@ -149,7 +149,7 @@ async function deletePassword(id: number) {
     await walletClient.writeContract(request);
 }
 
-export async function getPasswords() {
+export async function getPasswords(): Promise<Password[]> {
     const registryAddress = await getRegistryAddress();
     if (registryAddress === undefined) throw new Error("Registry address is undefined")
     const data = await publicClient.readContract({
@@ -158,7 +158,7 @@ export async function getPasswords() {
         functionName: 'getPasswords',
         account,
     })
-    console.log(data)
+    return data as Password[]
 }
 
 async function updatePassword(p: Password) {
