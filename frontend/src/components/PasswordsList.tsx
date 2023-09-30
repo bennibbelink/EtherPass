@@ -5,7 +5,9 @@ import { TagContext } from "../context/TagContext";
 import Modal from "./forms/Modal";
 import PasswordForm from "./forms/PasswordForm";
 import { PasswordListContext } from "../context/PasswordListContext";
+
 const PasswordsList = () => {
+  const { setPasswordList } = useContext(PasswordListContext);
   const { passwordList } = useContext(PasswordListContext);
   const [editPasswordModalOpen, setEditPasswordModalOpen] = useState(false);
   const [currPasswordData, setCurrPasswordData] = useState<
@@ -15,6 +17,20 @@ const PasswordsList = () => {
 
   const handleDelete = (id: number) => {
     console.log("delete", id);
+  };
+  const handleEditSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    data: Password
+  ) => {
+    e.preventDefault();
+    console.log("edit", data);
+    for (let i = 0; i < passwordList.length; i++) {
+      if (passwordList[i].id === data.id) {
+        passwordList[i] = data;
+        break;
+      }
+    }
+    setPasswordList(passwordList);
   };
 
   const handleEdit = (password: Password) => {
@@ -53,7 +69,7 @@ const PasswordsList = () => {
         <PasswordForm
           onClose={() => setEditPasswordModalOpen(false)}
           title="Edit a Password"
-          handleSubmit={() => console.log("edit")}
+          handleSubmit={handleEditSubmit}
           initialData={currPasswordData}
         />
       </Modal>
