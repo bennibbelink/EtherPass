@@ -1,16 +1,16 @@
 import { createContext, useState } from "react";
 
 interface TagContextValue {
-  tagNumber: number;
-  setTagNumber?: React.Dispatch<React.SetStateAction<number>>;
+  activeTagNumber: number;
+  setActiveTagNumber?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TagContext = createContext<TagContextValue>({ tagNumber: 0 });
+const TagContext = createContext<TagContextValue>({ activeTagNumber: 0 });
 
 const TagContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [tagNumber, setTagNumber] = useState(0);
+  const [activeTagNumber, setActiveTagNumber] = useState(0);
   return (
-    <TagContext.Provider value={{ tagNumber, setTagNumber }}>
+    <TagContext.Provider value={{ activeTagNumber, setActiveTagNumber }}>
       {children}
     </TagContext.Provider>
   );

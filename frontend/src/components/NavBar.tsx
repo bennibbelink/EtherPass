@@ -6,6 +6,7 @@ import { getPasswordListsEqual } from "../utils/comparePasswords";
 import Modal from "./forms/Modal";
 import PasswordForm from "./forms/PasswordForm";
 import { Password } from "../testData";
+
 const NavBar = () => {
   const { setPasswordList } = useContext(PasswordListContext);
   const [addPasswordModalOpen, setAddPasswordModalOpen] = useState(false);
@@ -13,16 +14,15 @@ const NavBar = () => {
   const handleOpenAddPassword = () => {
     setAddPasswordModalOpen(true);
   };
+  const onSaveClick = () => {
+    console.log("updated data and make request");
+  };
 
   const handleCancel = () => {
     setPasswordList(initialPasswordList);
   };
 
-  const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-    data: Password
-  ) => {
-    e.preventDefault();
+  const handleSubmit = (data: Password) => {
     setAddPasswordModalOpen(false);
     setPasswordList((prev) => [...prev, data]);
     console.log(data);
@@ -40,7 +40,11 @@ const NavBar = () => {
                 onClick={handleCancel}>
                 Cancel
               </button>
-              <button className={clsx("btn btn-sm btn-accent")}>Save</button>
+              <button
+                className={clsx("btn btn-sm btn-accent")}
+                onClick={onSaveClick}>
+                Save
+              </button>
             </>
           )}
 

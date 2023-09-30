@@ -3,19 +3,14 @@ import { TagContext } from "../context/TagContext";
 import { tagMap } from "../utils/TagMap";
 import TagMenuButton from "./TagMenuButton";
 const TagButtonGroup = () => {
-  const { setTagNumber } = useContext(TagContext);
+  const { setActiveTagNumber } = useContext(TagContext);
   const handleTagClick = (tagNumber: number) => {
-    if (setTagNumber) setTagNumber(tagNumber);
+    if (setActiveTagNumber) setActiveTagNumber(tagNumber);
   };
 
   return (
     <div className="flex flex-col gap-2 my-2">
-      <TagMenuButton
-        handleTagClick={handleTagClick}
-        isAll={true}
-        color="bg-red-500"
-        tagNumber={0}
-      />
+      <TagMenuButton handleTagClick={handleTagClick} tagNumber={0} />
       {Object.entries(tagMap).map((color, index) => {
         return (
           <TagMenuButton

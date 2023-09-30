@@ -4,23 +4,25 @@ import clsx from "clsx";
 import { ImCancelCircle } from "react-icons/im";
 import { Password } from "../../testData";
 import ExitButton from "./ExitButton";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Props {
   onClose: () => void;
   title: string;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>, data: Password) => void;
+  handleSubmit: (data: Password) => void;
   initialData?: Password;
 }
+const defaultInitialData: Password = {
+  id: -1,
+  nickname: "",
+  username: "",
+  passwordText: "",
+  domain: "",
+  tag: 0,
+};
 
 const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
-  const [data, setData] = useState<Password>({
-    id: -1,
-    nickname: "",
-    username: "",
-    passwordText: "",
-    domain: "",
-    tag: 0,
-  });
+  const [data, setData] = useState<Password>(defaultInitialData);
 
   useEffect(() => {
     if (initialData) setData(initialData);
@@ -28,12 +30,26 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
 
   return (
     <>
+      <Toaster />
       <ExitButton
         onClick={onClose}
         icon={<ImCancelCircle className="h-6 w-6" />}
       />
       <form
-        onSubmit={(e) => handleSubmit(e, data)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (
+            data.nickname === "" ||
+            data.username === "" ||
+            data.passwordText === "" ||
+            data.domain === ""
+          ) {
+            toast.error("Please fill out all fields");
+            return;
+          }
+          setData(defaultInitialData);
+          handleSubmit(data);
+        }}
         className="flex flex-col gap-1 items-center">
         <h2 className="text-2xl font-bold pb-1">{title}</h2>
         <div>
@@ -82,25 +98,21 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
         </div>
         {/* <span className="label-text text-base">Tag</span> */}
         <div className="flex gap-3 py-2">
+          <div
+            onClick={() => setData({ ...data, tag: 0 })}
+            className={clsx(
+              "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
+              data.tag === 0 ? "border-white" : "border-accent"
+            )}></div>
           {Object.entries(tagMap).map((color, index) => {
-            if (index === 0)
-              return (
-                <div
-                  key={index}
-                  onClick={() => setData({ ...data, tag: index })}
-                  className={clsx(
-                    "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
-                    data.tag === index ? "border-white" : "border-accent"
-                  )}></div>
-              );
             return (
               <div
-                onClick={() => setData({ ...data, tag: index })}
+                onClick={() => setData({ ...data, tag: Number(color[0]) })}
                 key={index}
                 className={clsx(
                   "rounded-full h-4 w-4 cursor-pointer transition-all duration-75",
                   color,
-                  data.tag === index && "border-2 border-white"
+                  data.tag === Number(color[0]) && "border-2 border-white"
                 )}></div>
             );
           })}

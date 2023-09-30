@@ -13,16 +13,12 @@ const PasswordsList = () => {
   const [currPasswordData, setCurrPasswordData] = useState<
     Password | undefined
   >(undefined);
-  const { tagNumber } = useContext(TagContext);
+  const { activeTagNumber } = useContext(TagContext);
 
   const handleDelete = (id: number) => {
-    console.log("delete", id);
+    setPasswordList((prev) => prev.filter((password) => password.id !== id));
   };
-  const handleEditSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-    data: Password
-  ) => {
-    e.preventDefault();
+  const handleEditSubmit = (data: Password) => {
     console.log("edit", data);
     for (let i = 0; i < passwordList.length; i++) {
       if (passwordList[i].id === data.id) {
@@ -31,6 +27,7 @@ const PasswordsList = () => {
       }
     }
     setPasswordList(passwordList);
+    setEditPasswordModalOpen(false);
   };
 
   const handleEdit = (password: Password) => {
@@ -51,7 +48,7 @@ const PasswordsList = () => {
       <div className="flex flex-col gap-2 overflow-y-auto h-96">
         {passwordList.map((password, index) => {
           const { tag } = password;
-          if (tagNumber === 0 || tagNumber === tag) {
+          if (activeTagNumber === 0 || activeTagNumber === tag) {
             return (
               <PasswordItem
                 handleDelete={() => handleDelete(password.id)}
