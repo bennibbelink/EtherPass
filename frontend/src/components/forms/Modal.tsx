@@ -18,12 +18,12 @@ const Modal = ({ children, open, disableClickOutside, onClose }: Props) => {
   });
 
   const modalClass = clsx({
-    "modal modal-middle": true,
+    "modal modal-middle ": true,
     "modal-open": open,
   });
   return (
     <div className={modalClass}>
-      <div className="modal-box max-w-sm" ref={ref}>
+      <div className="modal-box py-2 max-w-sm border-2 border-accent" ref={ref}>
         {children}
       </div>
     </div>
