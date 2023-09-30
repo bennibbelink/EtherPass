@@ -2,6 +2,7 @@ pragma solidity ^0.8.13;
 
 struct Password {
     uint id;
+    string nickname;
     string password;
     string username;
     string domain;
@@ -41,11 +42,11 @@ contract Registry {
         return _passwords;
     }
 
-    function addPassword(string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
+    function addPassword(string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
         // only the owner of the registry can add a password
         require(msg.sender == owner, "Only the owner can add a password");
         // create a new Password struct
-        Password memory p = Password(currId, _password, _username, _domain, _tag);
+        Password memory p = Password(currId, _nickname, _password, _username, _domain, _tag);
         // add the password to the registry
         passwords[currId] = p;
         // increment the current id
@@ -54,12 +55,13 @@ contract Registry {
         numPasswords++;
     }
 
-    function updatePassword(uint id, string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
+    function updatePassword(uint id, string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
         // only the owner of the registry can update a password
         require(msg.sender == owner, "Only the owner can update a password");
         // make sure the password exists
         require(!isPasswordEmpty(id), "Password does not exist");
         // update the password
+        passwords[id].nickname = _nickname;
         passwords[id].password = _password;
         passwords[id].username = _username;
         passwords[id].domain = _domain;
@@ -80,6 +82,7 @@ contract Registry {
     function isPasswordEmpty(uint id) private view returns (bool) {
         Password memory p = passwords[id];
         return p.id == 0 && 
+            keccak256(bytes(p.nickname)) == keccak256(bytes("")) &&
             keccak256(bytes(p.password)) == keccak256(bytes("")) && 
             keccak256(bytes(p.username)) == keccak256(bytes("")) && 
             keccak256(bytes(p.domain)) == keccak256(bytes(""))  && 
