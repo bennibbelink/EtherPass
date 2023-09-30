@@ -5,7 +5,9 @@ import { Password } from "../testData";
 interface PasswordListContextValue {
   passwordList: Password[];
   initialPasswordList: Password[];
+  hasRegistry: boolean;
   commitChanges: () => void;
+  setHasRegistry: React.Dispatch<React.SetStateAction<boolean>>;
   setPasswordList: React.Dispatch<React.SetStateAction<Password[]>>;
   setInitialPasswordList: React.Dispatch<React.SetStateAction<Password[]>>;
 }
@@ -13,7 +15,9 @@ interface PasswordListContextValue {
 const PasswordListContext = createContext<PasswordListContextValue>({
   passwordList: [],
   initialPasswordList: [],
+  hasRegistry: false,
   setPasswordList: () => {},
+  setHasRegistry: () => {},
   setInitialPasswordList: () => {},
   commitChanges: () => {},
 });
@@ -84,6 +88,8 @@ const PasswordListContextProvider = ({
     <PasswordListContext.Provider
       value={{
         commitChanges,
+        hasRegistry,
+        setHasRegistry,
         initialPasswordList,
         passwordList,
         setPasswordList,
