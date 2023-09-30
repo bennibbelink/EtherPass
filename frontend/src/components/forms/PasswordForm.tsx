@@ -1,33 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { tagMap } from "../../utils/TagMap";
 import clsx from "clsx";
 import { ImCancelCircle } from "react-icons/im";
-type AddPassword = {
-  nickname: string;
-  username: string;
-  passwordText: string;
-  domain: string;
-  tag: number;
-};
+import { Password } from "../../testData";
+import ExitButton from "./ExitButton";
 
-const AddPasswordForm = () => {
-  const [data, setData] = useState<AddPassword>({
+interface Props {
+  onClose: () => void;
+  title: string;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>, data: Password) => void;
+  initialData?: Password;
+}
+
+const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
+  const [data, setData] = useState<Password>({
+    id: -1,
     nickname: "",
     username: "",
     passwordText: "",
     domain: "",
     tag: 0,
   });
+  useEffect(() => {
+    if (initialData) setData(initialData);
+  }, [initialData]);
 
-  const handleSubmit = () => {
-    console.log(data);
-  };
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-1 items-center">
-      <button className="btn btn-sm absolute top-3 right-3">
-        <ImCancelCircle className="h-6 w-6" />
-      </button>
-      <h2 className="text-2xl font-bold pb-1">Add a Password</h2>
+    <form
+      onSubmit={(e) => handleSubmit(e, data)}
+      className="flex flex-col gap-1 items-center">
+      <button
+        onClick={onClose}
+        className="btn btn-sm absolute rounded-full top-3 right-3"></button>
+      <ExitButton
+        onClick={onClose}
+        icon={<ImCancelCircle className="h-6 w-6" />}
+      />
+      <h2 className="text-2xl font-bold pb-1">{title}</h2>
       <div>
         <label htmlFor="nickname" className="label py-0 font-medium">
           <span className="label-text text-base">Nickname</span>
@@ -72,8 +81,8 @@ const AddPasswordForm = () => {
           onChange={(e) => setData({ ...data, domain: e.target.value })}
         />
       </div>
-      <span className="label-text text-base">Tag</span>
-      <div className="flex gap-3 pb-2">
+      {/* <span className="label-text text-base">Tag</span> */}
+      <div className="flex gap-3 py-2">
         {Object.entries(tagMap).map((color, index) => {
           if (index === 0)
             return (
@@ -97,11 +106,11 @@ const AddPasswordForm = () => {
         })}
       </div>
 
-      <button className="btn btn-accent text-center" type="submit">
-        Create
+      <button className="btn btn-accent btn-sm text-center" type="submit">
+        Save
       </button>
     </form>
   );
 };
 
-export default AddPasswordForm;
+export default PasswordForm;

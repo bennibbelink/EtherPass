@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { PasswordListContext } from "../context/PasswordListContext";
 import { getPasswordListsEqual } from "../utils/comparePasswords";
 import Modal from "./forms/Modal";
-import AddPasswordForm from "./forms/AddPasswordForm";
+import PasswordForm from "./forms/PasswordForm";
 const NavBar = () => {
   const [addPasswordModalOpen, setAddPasswordModalOpen] = useState(false);
   const { initialPasswordList, passwordList } = useContext(PasswordListContext);
@@ -32,7 +32,11 @@ const NavBar = () => {
       <Modal
         open={addPasswordModalOpen}
         onClose={() => setAddPasswordModalOpen(false)}>
-        <AddPasswordForm />
+        <PasswordForm
+          onClose={() => setAddPasswordModalOpen(false)}
+          title="Add a Password"
+          handleSubmit={() => console.log("add")}
+        />
       </Modal>
     </>
   );

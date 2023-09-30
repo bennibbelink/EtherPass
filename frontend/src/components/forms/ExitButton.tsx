@@ -5,14 +5,14 @@ type Props = {
   icon: React.ReactNode;
 };
 
-const PasswordButton = ({ onClick, icon }: Props) => {
+const ExitButton = ({ onClick, icon }: Props) => {
   const [hover, setHover] = useState(false);
   return (
     <button
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className={clsx(
-        "m-0 rounded-full transition-all duration-200",
+        "m-0 rounded-full transition-all duration-200 absolute top-3 right-3",
         hover ? "text-accent-focus" : "text-accent"
       )}
       onClick={onClick}>
@@ -21,4 +21,4 @@ const PasswordButton = ({ onClick, icon }: Props) => {
   );
 };
 
-export default PasswordButton;
+export default ExitButton;

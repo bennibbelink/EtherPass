@@ -8,7 +8,7 @@ import "../App.css";
 import PasswordButton from "./PasswordButton";
 type Props = {
   password: Password;
-  handleEdit: (id: number) => void;
+  handleEdit: (password: Password) => void;
   handleDelete: (id: number) => void;
 };
 
@@ -75,7 +75,7 @@ const PasswordItem = ({ password, handleDelete, handleEdit }: Props) => {
               <ul
                 tabIndex={0}
                 className="dropdown-content p-2 flex flex-col gap-1">
-                <li className="btn btn-sm" onClick={() => handleEdit(id)}>
+                <li className="btn btn-sm" onClick={() => handleEdit(password)}>
                   Edit
                 </li>
                 <li className="btn btn-sm" onClick={() => handleDelete(id)}>
