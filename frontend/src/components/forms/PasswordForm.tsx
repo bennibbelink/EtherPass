@@ -26,87 +26,89 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
   }, [initialData]);
 
   return (
-    <form
-      onSubmit={(e) => handleSubmit(e, data)}
-      className="flex flex-col gap-1 items-center">
+    <>
       <ExitButton
         onClick={onClose}
         icon={<ImCancelCircle className="h-6 w-6" />}
       />
-      <h2 className="text-2xl font-bold pb-1">{title}</h2>
-      <div>
-        <label htmlFor="nickname" className="label py-0 font-medium">
-          <span className="label-text text-base">Nickname</span>
-        </label>
-        <input
-          className="input input-sm input-bordered w-full max-w-xs"
-          type="text"
-          value={data.nickname}
-          onChange={(e) => setData({ ...data, nickname: e.target.value })}
-        />
-      </div>
-      <div>
-        <label htmlFor="username" className="label py-0 font-medium">
-          <span className="label-text text-base">Username</span>
-        </label>
-        <input
-          className="input input-sm input-bordered w-full max-w-xs"
-          type="text"
-          value={data.username}
-          onChange={(e) => setData({ ...data, username: e.target.value })}
-        />
-      </div>
-      <div>
-        <label htmlFor="passwordText" className="label py-0 font-medium">
-          <span className="label-text text-base">Password</span>
-        </label>
-        <input
-          className="input input-sm input-bordered w-full max-w-xs"
-          type="text"
-          value={data.passwordText}
-          onChange={(e) => setData({ ...data, passwordText: e.target.value })}
-        />
-      </div>
-      <div>
-        <label htmlFor="domain" className="label py-0 font-medium">
-          <span className="label-text text-base">Domain</span>
-        </label>
-        <input
-          className="input input-sm input-bordered w-full max-w-xs"
-          type="text"
-          value={data.domain}
-          onChange={(e) => setData({ ...data, domain: e.target.value })}
-        />
-      </div>
-      {/* <span className="label-text text-base">Tag</span> */}
-      <div className="flex gap-3 py-2">
-        {Object.entries(tagMap).map((color, index) => {
-          if (index === 0)
+      <form
+        onSubmit={(e) => handleSubmit(e, data)}
+        className="flex flex-col gap-1 items-center">
+        <h2 className="text-2xl font-bold pb-1">{title}</h2>
+        <div>
+          <label htmlFor="nickname" className="label py-0 font-medium">
+            <span className="label-text text-base">Nickname</span>
+          </label>
+          <input
+            className="input input-sm input-bordered w-full max-w-xs"
+            type="text"
+            value={data.nickname}
+            onChange={(e) => setData({ ...data, nickname: e.target.value })}
+          />
+        </div>
+        <div>
+          <label htmlFor="username" className="label py-0 font-medium">
+            <span className="label-text text-base">Username</span>
+          </label>
+          <input
+            className="input input-sm input-bordered w-full max-w-xs"
+            type="text"
+            value={data.username}
+            onChange={(e) => setData({ ...data, username: e.target.value })}
+          />
+        </div>
+        <div>
+          <label htmlFor="passwordText" className="label py-0 font-medium">
+            <span className="label-text text-base">Password</span>
+          </label>
+          <input
+            className="input input-sm input-bordered w-full max-w-xs"
+            type="text"
+            value={data.passwordText}
+            onChange={(e) => setData({ ...data, passwordText: e.target.value })}
+          />
+        </div>
+        <div>
+          <label htmlFor="domain" className="label py-0 font-medium">
+            <span className="label-text text-base">Domain</span>
+          </label>
+          <input
+            className="input input-sm input-bordered w-full max-w-xs"
+            type="text"
+            value={data.domain}
+            onChange={(e) => setData({ ...data, domain: e.target.value })}
+          />
+        </div>
+        {/* <span className="label-text text-base">Tag</span> */}
+        <div className="flex gap-3 py-2">
+          {Object.entries(tagMap).map((color, index) => {
+            if (index === 0)
+              return (
+                <div
+                  onClick={() => setData({ ...data, tag: index })}
+                  className={clsx(
+                    "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
+                    data.tag === index ? "border-white" : "border-accent"
+                  )}></div>
+              );
             return (
               <div
                 onClick={() => setData({ ...data, tag: index })}
+                key={index}
                 className={clsx(
-                  "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
-                  data.tag === index ? "border-white" : "border-accent"
+                  "rounded-full h-4 w-4 cursor-pointer transition-all duration-75",
+                  color,
+                  data.tag === index && "border-2 border-white"
                 )}></div>
             );
-          return (
-            <div
-              onClick={() => setData({ ...data, tag: index })}
-              key={index}
-              className={clsx(
-                "rounded-full h-4 w-4 cursor-pointer transition-all duration-75",
-                color,
-                data.tag === index && "border-2 border-white"
-              )}></div>
-          );
-        })}
-      </div>
+          })}
+        </div>
 
-      <button className="btn btn-accent btn-sm text-center" type="submit">
-        Save
-      </button>
-    </form>
+        <button className="btn btn-accent btn-sm text-center" type="submit">
+          Save
+        </button>
+      </form>
+    </>
   );
 };
 
