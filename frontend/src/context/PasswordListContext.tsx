@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Password } from "../testData";
-import * as EthAPI from "../Eth_API";
+// import * as EthAPI from "../Eth_API";
 
 interface PasswordListContextValue {
   passwordList: Password[];
@@ -29,15 +29,15 @@ const PasswordListContextProvider = ({
   );
   const [hasRegistry, setHasRegistry] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (EthAPI.account) {
-      setHasRegistry(true);
-      EthAPI.getPasswords().then((passwords: Password[]) => {
-        setPasswordList(passwords);
-        setInitialPasswordList(passwords);
-      });
-    }
-  }, [EthAPI.account]);
+  // useEffect(() => {
+  //   if (EthAPI.account) {
+  //     setHasRegistry(true);
+  //     EthAPI.getPasswords().then((passwords: Password[]) => {
+  //       setPasswordList(passwords);
+  //       setInitialPasswordList(passwords);
+  //     });
+  //   }
+  // }, [EthAPI.account]);
 
   const commitChanges = () => {
     const adds: Password[] = [];
@@ -66,7 +66,7 @@ const PasswordListContextProvider = ({
       }
     });
 
-    EthAPI.batchUpdate(adds, deletes, updates);
+    // EthAPI.batchUpdate(adds, deletes, updates);
   };
 
   function isEqual(a: Password, b: Password) {

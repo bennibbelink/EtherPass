@@ -21,6 +21,7 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
     domain: "",
     tag: 0,
   });
+
   useEffect(() => {
     if (initialData) setData(initialData);
   }, [initialData]);
@@ -85,6 +86,7 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
             if (index === 0)
               return (
                 <div
+                  key={index}
                   onClick={() => setData({ ...data, tag: index })}
                   className={clsx(
                     "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
@@ -103,9 +105,8 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
             );
           })}
         </div>
-
         <button className="btn btn-accent btn-sm text-center" type="submit">
-          Save
+          Add
         </button>
       </form>
     </>

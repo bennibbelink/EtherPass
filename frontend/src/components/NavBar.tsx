@@ -14,11 +14,16 @@ const NavBar = () => {
     setAddPasswordModalOpen(true);
   };
 
+  const handleCancel = () => {
+    setPasswordList(initialPasswordList);
+  };
+
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     data: Password
   ) => {
     e.preventDefault();
+    setAddPasswordModalOpen(false);
     setPasswordList((prev) => [...prev, data]);
     console.log(data);
   };
@@ -30,7 +35,11 @@ const NavBar = () => {
         <div className="flex gap-2">
           {!getPasswordListsEqual(initialPasswordList, passwordList) && (
             <>
-              <button className={clsx("btn btn-sm btn-accent")}>Cancel</button>
+              <button
+                className={clsx("btn btn-sm btn-accent")}
+                onClick={handleCancel}>
+                Cancel
+              </button>
               <button className={clsx("btn btn-sm btn-accent")}>Save</button>
             </>
           )}
