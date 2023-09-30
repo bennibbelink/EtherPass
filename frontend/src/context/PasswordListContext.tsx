@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Password, testPasswords } from "../testData";
-import * as EthAPI from "../Eth_API"
-
+import * as EthAPI from "../Eth_API";
 
 interface PasswordListContextValue {
   passwordList: Password[];
@@ -12,9 +11,10 @@ interface PasswordListContextValue {
 }
 
 const PasswordListContext = createContext<PasswordListContextValue>({
-  commitChanges: () => {},
-  passwordList: [],
-  initialPasswordList: [],
+  passwordList: testPasswords,
+  initialPasswordList: testPasswords,
+  setPasswordList: () => {},
+  setInitialPasswordList: () => {},
 });
 
 const PasswordListContextProvider = ({
@@ -45,36 +45,39 @@ const PasswordListContextProvider = ({
 
     passwordList.forEach((p: Password) => {
       // first find the password with the same id
-      const initialP = initialPasswordList.find((p: Password) => p.id === p.id)
-      if (initialP !== undefined) { // this id exists
-        if (!isEqual(p, initialP)) { // this password has been updated
-          updates.push(p)
+      const initialP = initialPasswordList.find((p: Password) => p.id === p.id);
+      if (initialP !== undefined) {
+        // this id exists
+        if (!isEqual(p, initialP)) {
+          // this password has been updated
+          updates.push(p);
         }
-      } else { // this id does not exist already, so it must be a new password
-        adds.push(p)
+      } else {
+        // this id does not exist already, so it must be a new password
+        adds.push(p);
       }
-    })
+    });
 
     // check the persisted paswords for any that have been deleted
     initialPasswordList.forEach((p: Password) => {
       if (passwordList.find((p: Password) => p.id === p.id) === undefined) {
-        deletes.push(p)
+        deletes.push(p);
       }
-    })
+    });
 
     EthAPI.batchUpdate(adds, deletes, updates);
-
   }
 
   function isEqual(a: Password, b: Password) {
-    return a.id === b.id &&
+    return (
+      a.id === b.id &&
       a.nickname === b.nickname &&
       a.username === b.username &&
       a.passwordText === b.passwordText &&
       a.domain === b.domain &&
       a.tag === b.tag
+    );
   }
-
 
   return (
     <PasswordListContext.Provider
@@ -89,7 +92,5 @@ const PasswordListContextProvider = ({
     </PasswordListContext.Provider>
   );
 };
-
-
 
 export { PasswordListContext, PasswordListContextProvider };

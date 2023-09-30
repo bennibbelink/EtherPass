@@ -5,11 +5,22 @@ import { PasswordListContext } from "../context/PasswordListContext";
 import { getPasswordListsEqual } from "../utils/comparePasswords";
 import Modal from "./forms/Modal";
 import PasswordForm from "./forms/PasswordForm";
+import { Password } from "../testData";
 const NavBar = () => {
+  const { setPasswordList } = useContext(PasswordListContext);
   const [addPasswordModalOpen, setAddPasswordModalOpen] = useState(false);
   const { initialPasswordList, passwordList } = useContext(PasswordListContext);
   const handleOpenAddPassword = () => {
     setAddPasswordModalOpen(true);
+  };
+
+  const handleSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    data: Password
+  ) => {
+    e.preventDefault();
+    setPasswordList((prev) => [...prev, data]);
+    console.log(data);
   };
 
   return (
@@ -35,7 +46,7 @@ const NavBar = () => {
         <PasswordForm
           onClose={() => setAddPasswordModalOpen(false)}
           title="Add a Password"
-          handleSubmit={() => console.log("add")}
+          handleSubmit={handleSubmit}
         />
       </Modal>
     </>
