@@ -3,7 +3,6 @@ type TagMap = {
 };
 
 export const tagMap: TagMap = {
-  0: "bg-white",
   1: "bg-primary",
   2: "bg-secondary",
   3: "bg-info",

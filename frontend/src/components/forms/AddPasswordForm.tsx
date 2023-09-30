@@ -24,6 +24,9 @@ const AddPasswordForm = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-1 items-center">
+      <button className="btn btn-sm absolute top-3 right-3">
+        <ImCancelCircle className="h-6 w-6" />
+      </button>
       <h2 className="text-2xl font-bold pb-1">Add a Password</h2>
       <div>
         <label htmlFor="nickname" className="label py-0 font-medium">
@@ -76,16 +79,17 @@ const AddPasswordForm = () => {
             return (
               <div
                 onClick={() => setData({ ...data, tag: index })}
-                className={clsx(data.tag === index && "border-2")}>
-                <ImCancelCircle />
-              </div>
+                className={clsx(
+                  "rounded-full h-4 w-4 cursor-pointer transition-all duration-75 border-2",
+                  data.tag === index ? "border-white" : "border-accent"
+                )}></div>
             );
           return (
             <div
               onClick={() => setData({ ...data, tag: index })}
               key={index}
               className={clsx(
-                "rounded-full h-4 w-4 cursor-pointer",
+                "rounded-full h-4 w-4 cursor-pointer transition-all duration-75",
                 color,
                 data.tag === index && "border-2 border-white"
               )}></div>
