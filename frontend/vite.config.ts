@@ -5,4 +5,12 @@ import manifest from "./manifest.json";
 
 export default defineConfig({
   plugins: [react(), crx({ manifest })],
+  optimizeDeps: {
+    disabled: false,
+  },
+  build: {
+    commonjsOptions: {
+      include: []
+    }
+  }
 });

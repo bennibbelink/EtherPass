@@ -65,5 +65,9 @@ module.exports = {
     solc: {
       version: "0.8.13",      // Fetch exact version from solc-bin
     }
+  },
+  solidityLog: {
+    displayPrefix: "Ben: ",
+    preventConsoleLogMigration: true
   }
 };
