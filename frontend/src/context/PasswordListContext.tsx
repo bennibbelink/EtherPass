@@ -1,20 +1,21 @@
 import { createContext, useEffect, useState } from "react";
-import { Password, testPasswords } from "../testData";
+import { Password } from "../testData";
 import * as EthAPI from "../Eth_API";
 
 interface PasswordListContextValue {
   passwordList: Password[];
   initialPasswordList: Password[];
   commitChanges: () => void;
-  setPasswordList?: React.Dispatch<React.SetStateAction<Password[]>>;
-  setInitialPasswordList?: React.Dispatch<React.SetStateAction<Password[]>>;
+  setPasswordList: React.Dispatch<React.SetStateAction<Password[]>>;
+  setInitialPasswordList: React.Dispatch<React.SetStateAction<Password[]>>;
 }
 
 const PasswordListContext = createContext<PasswordListContextValue>({
-  passwordList: testPasswords,
-  initialPasswordList: testPasswords,
+  passwordList: [],
+  initialPasswordList: [],
   setPasswordList: () => {},
   setInitialPasswordList: () => {},
+  commitChanges: () => {},
 });
 
 const PasswordListContextProvider = ({
@@ -35,13 +36,13 @@ const PasswordListContextProvider = ({
         setPasswordList(passwords);
         setInitialPasswordList(passwords);
       });
-    };
-  },[EthAPI.account])
+    }
+  }, [EthAPI.account]);
 
   const commitChanges = () => {
-    const adds: Password[] = []
-    const updates: Password[] = []
-    const deletes: Password[] = []
+    const adds: Password[] = [];
+    const updates: Password[] = [];
+    const deletes: Password[] = [];
 
     passwordList.forEach((p: Password) => {
       // first find the password with the same id
@@ -66,7 +67,7 @@ const PasswordListContextProvider = ({
     });
 
     EthAPI.batchUpdate(adds, deletes, updates);
-  }
+  };
 
   function isEqual(a: Password, b: Password) {
     return (

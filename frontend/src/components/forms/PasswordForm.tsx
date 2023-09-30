@@ -29,9 +29,6 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
     <form
       onSubmit={(e) => handleSubmit(e, data)}
       className="flex flex-col gap-1 items-center">
-      <button
-        onClick={onClose}
-        className="btn btn-sm absolute rounded-full top-3 right-3"></button>
       <ExitButton
         onClick={onClose}
         icon={<ImCancelCircle className="h-6 w-6" />}
