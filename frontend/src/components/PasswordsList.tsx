@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
-import { Password, testPasswords } from "../testData";
+import { Password } from "../testData";
 import PasswordItem from "./PasswordItem";
 import { TagContext } from "../context/TagContext";
 import Modal from "./forms/Modal";
 import PasswordForm from "./forms/PasswordForm";
+import { PasswordListContext } from "../context/PasswordListContext";
 const PasswordsList = () => {
+  const { passwordList } = useContext(PasswordListContext);
   const [editPasswordModalOpen, setEditPasswordModalOpen] = useState(false);
   const [currPasswordData, setCurrPasswordData] = useState<
     Password | undefined
@@ -20,7 +22,7 @@ const PasswordsList = () => {
     setCurrPasswordData(password);
   };
 
-  if (testPasswords.length === 0) {
+  if (passwordList.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-96">
         <p className="text-2xl">No passwords found</p>
@@ -31,7 +33,7 @@ const PasswordsList = () => {
   return (
     <>
       <div className="flex flex-col gap-2 overflow-y-auto h-96">
-        {testPasswords.map((password, index) => {
+        {passwordList.map((password, index) => {
           const { tag } = password;
           if (tagNumber === 0 || tagNumber === tag) {
             return (
