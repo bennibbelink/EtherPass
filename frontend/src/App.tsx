@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import PasswordsList from "./components/PasswordsList";
@@ -10,8 +10,11 @@ import {
 import { TagContextProvider } from "./context/TagContext";
 import LandingPage from "./components/landingPage/LandingPage";
 function App() {
-  // const { hasRegistry } = useContext(PasswordListContext);
-  const hasRegistry = false;
+  const { hasRegistry } = useContext(PasswordListContext);
+  console.log("has reg", hasRegistry);
+  useEffect(() => {
+    console.log(hasRegistry, "h");
+  });
   return (
     <PasswordListContextProvider>
       <TagContextProvider>

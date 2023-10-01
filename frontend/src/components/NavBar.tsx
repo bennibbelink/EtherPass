@@ -10,11 +10,13 @@ import { Password } from "../testData";
 const NavBar = () => {
   const { setPasswordList } = useContext(PasswordListContext);
   const [addPasswordModalOpen, setAddPasswordModalOpen] = useState(false);
-  const { initialPasswordList, passwordList } = useContext(PasswordListContext);
+  const { initialPasswordList, passwordList, commitChanges } =
+    useContext(PasswordListContext);
   const handleOpenAddPassword = () => {
     setAddPasswordModalOpen(true);
   };
-  const onSaveClick = () => {
+  const onSaveClick = async () => {
+    await commitChanges();
     console.log("updated data and make request");
   };
 
