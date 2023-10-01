@@ -78,7 +78,7 @@ const PasswordListContextProvider = ({
       a.id === b.id &&
       a.nickname === b.nickname &&
       a.username === b.username &&
-      a.passwordText === b.passwordText &&
+      a.password === b.password &&
       a.domain === b.domain &&
       a.tag === b.tag
     );

@@ -16,7 +16,7 @@ const defaultInitialData: Password = {
   id: -1,
   nickname: "",
   username: "",
-  passwordText: "",
+  password: "",
   domain: "",
   tag: 0,
 };
@@ -41,7 +41,7 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
           if (
             data.nickname === "" ||
             data.username === "" ||
-            data.passwordText === "" ||
+            data.password === "" ||
             data.domain === ""
           ) {
             toast.error("Please fill out all fields");
@@ -75,14 +75,14 @@ const PasswordForm = ({ onClose, title, handleSubmit, initialData }: Props) => {
           />
         </div>
         <div>
-          <label htmlFor="passwordText" className="label py-0 font-medium">
+          <label htmlFor="password" className="label py-0 font-medium">
             <span className="label-text text-base">Password</span>
           </label>
           <input
             className="input input-sm input-bordered w-full max-w-xs"
             type="text"
-            value={data.passwordText}
-            onChange={(e) => setData({ ...data, passwordText: e.target.value })}
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
           />
         </div>
         <div>

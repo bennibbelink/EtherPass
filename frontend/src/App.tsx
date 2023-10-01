@@ -10,7 +10,8 @@ import {
 import { TagContextProvider } from "./context/TagContext";
 import LandingPage from "./components/landingPage/LandingPage";
 function App() {
-  const { hasRegistry } = useContext(PasswordListContext);
+  // const { hasRegistry } = useContext(PasswordListContext);
+  const hasRegistry = true;
   console.log("has reg", hasRegistry);
   useEffect(() => {
     console.log(hasRegistry, "h");

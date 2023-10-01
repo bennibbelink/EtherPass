@@ -12,9 +12,11 @@ const NavBar = () => {
   const [addPasswordModalOpen, setAddPasswordModalOpen] = useState(false);
   const { initialPasswordList, passwordList, commitChanges } =
     useContext(PasswordListContext);
+
   const handleOpenAddPassword = () => {
     setAddPasswordModalOpen(true);
   };
+
   const onSaveClick = async () => {
     await commitChanges();
     console.log("updated data and make request");
