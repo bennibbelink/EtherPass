@@ -46,7 +46,7 @@ const PasswordListContextProvider = ({
   const commitChanges = async () => {
     const adds: Password[] = [];
     const updates: Password[] = [];
-    const deletes: number[] = [];
+    const deletes: Password[] = [];
 
     passwordList.forEach((p: Password) => {
       // first find the password with the same id
@@ -66,7 +66,7 @@ const PasswordListContextProvider = ({
     // check the persisted paswords for any that have been deleted
     initialPasswordList.forEach((p: Password) => {
       if (passwordList.find((p: Password) => p.id === p.id) === undefined) {
-        deletes.push(p.id);
+        deletes.push(p);
       }
     });
 

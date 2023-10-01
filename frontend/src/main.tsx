@@ -2,15 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { PasswordListContextProvider } from './context/PasswordListContext.tsx'
-import { TagContextProvider } from './context/TagContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <PasswordListContextProvider>
-      <TagContextProvider>
-      <App />
-    </TagContextProvider>
-  </PasswordListContextProvider>
-  </React.StrictMode >,
+    <App />
+  </React.StrictMode>,
 )

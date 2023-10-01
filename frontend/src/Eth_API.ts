@@ -14,7 +14,11 @@ import { mainnet, goerli } from "viem/chains";
 import { Password } from "./testData";
 
 const CURRENT_CHAIN = goerli;
+<<<<<<< HEAD
 const GOERLI_PROXY_ADDRESS = "0x06aBEF79CB21A880F05Dd5c892A655aAcC88460B";
+=======
+const GOERLI_PROXY_ADDRESS = "0xDE854A2b96535230ecc282abE0540D0DCc671b21";
+>>>>>>> 16dc5b4ff4e32ff663854778cd8ff55ac032a219
 const publicClient = createPublicClient({
   chain: CURRENT_CHAIN,
   transport: http(),
@@ -29,7 +33,7 @@ export const [account] = await walletClient.getAddresses();
 
 export async function batchUpdate(
   adds: Password[],
-  deletes: number[],
+  deletes: Password[],
   updates: Password[]
 ) {
   const registryAddress = await getRegistryAddress();

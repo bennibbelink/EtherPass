@@ -11,7 +11,7 @@ struct Password {
 
 contract Registry {
     // the current next id for a Password
-    uint currId = 0;
+    uint currId = 1;
 
     // the number of passwords in the registry
     uint numPasswords = 0;
@@ -133,8 +133,8 @@ contract Registry {
         passwords[id].domain = "";
         passwords[id].tag = 0;
         delete passwords[id];
-
-        numPasswords --;
+        // decrement the number of passwords
+        numPasswords--;
     }
 
     function isPasswordEmpty(uint id) private view returns (bool) {

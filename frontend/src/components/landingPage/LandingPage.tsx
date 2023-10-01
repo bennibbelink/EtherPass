@@ -30,6 +30,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     hasMetaMask.current = isMetaMaskInstalled();
+    console.log(hasMetaMask.current, "cur");
   }, []);
 
   useEffect(() => {
@@ -81,9 +82,9 @@ const LandingPage = () => {
         </button>
       )}
 
-      {/* <button className="btn" onClick={deleteRegistry}>
+      <button className="btn" onClick={deleteRegistry}>
         Delete Registry
-      </button> */}
+      </button>
     </div>
   );
 };

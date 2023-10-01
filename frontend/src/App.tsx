@@ -10,23 +10,30 @@ import {
 import { TagContextProvider } from "./context/TagContext";
 import LandingPage from "./components/landingPage/LandingPage";
 function App() {
-  const { hasRegistry } = useContext(PasswordListContext);
+  // const { hasRegistry } = useContext(PasswordListContext);
+  const hasRegistry = true;
+  console.log("has reg", hasRegistry);
+  useEffect(() => {
+    console.log(hasRegistry, "h");
+  });
   return (
-    <>
-      {hasRegistry ? (
-        <div className="flex flex-col">
-          <NavBar />
-          <div className="flex">
-            <div className="flex-1 m-2">
-              <PasswordsList />
+    <PasswordListContextProvider>
+      <TagContextProvider>
+        {hasRegistry ? (
+          <div className="flex flex-col">
+            <NavBar />
+            <div className="flex">
+              <div className="flex-1 m-2">
+                <PasswordsList />
+              </div>
+              <RightSideBar />
             </div>
-            <RightSideBar />
           </div>
-        </div>
-      ) : (
-        <LandingPage />
-      )}
-    </>
+        ) : (
+          <LandingPage />
+        )}
+      </TagContextProvider>
+    </PasswordListContextProvider>
   );
 }
 
