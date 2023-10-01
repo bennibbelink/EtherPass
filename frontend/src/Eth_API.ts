@@ -13,7 +13,7 @@ import { mainnet, goerli } from "viem/chains";
 import { Password } from "./testData";
 
 const CURRENT_CHAIN = goerli;
-const GOERLI_PROXY_ADDRESS = "0xfc3b6c03d393be153AB1693CD4F6e70b66D4beaa";
+const GOERLI_PROXY_ADDRESS = "0xDE854A2b96535230ecc282abE0540D0DCc671b21";
 const publicClient = createPublicClient({
   //   batch: {
   //     multicall: {
