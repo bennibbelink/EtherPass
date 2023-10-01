@@ -14,7 +14,7 @@ import { mainnet, goerli } from "viem/chains";
 import { Password } from "./testData";
 
 const CURRENT_CHAIN = goerli;
-const GOERLI_PROXY_ADDRESS = "0x1b617212CBb12A0d2688dC635f33d568ba5fd3Ad";
+const GOERLI_PROXY_ADDRESS = "0x06aBEF79CB21A880F05Dd5c892A655aAcC88460B";
 const publicClient = createPublicClient({
   chain: CURRENT_CHAIN,
   transport: http(),

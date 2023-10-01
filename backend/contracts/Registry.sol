@@ -34,9 +34,11 @@ contract Registry {
         require(msg.sender == owner, "Only the owner can get passwords");
         Password[] memory _passwords = new Password[](numPasswords);
         // iterate through all the passwords up to currId
+        uint j = 0;
         for (uint i = 0; i < currId; i++) {
             if (!isPasswordEmpty(i)) {
-                _passwords[i] = passwords[i];
+                _passwords[j] = passwords[i];
+                j++;
             }
         }
         return _passwords;
@@ -124,6 +126,12 @@ contract Registry {
         // make sure the password exists
         require(!isPasswordEmpty(id), "Password does not exist");
         // delete the password
+        passwords[id].id = 0;
+        passwords[id].nickname = "";
+        passwords[id].password = "";   
+        passwords[id].username = "";    
+        passwords[id].domain = "";
+        passwords[id].tag = 0;
         delete passwords[id];
 
         numPasswords --;
