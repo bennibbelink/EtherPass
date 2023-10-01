@@ -13,7 +13,7 @@ interface Props {
   initialData?: Password;
 }
 const defaultInitialData: Password = {
-  id: -1,
+  id: 0,
   nickname: "",
   username: "",
   password: "",
