@@ -5,7 +5,7 @@ const getPasswordsEqual = (password1: Password, password2: Password) =>
   password1.id === password2.id &&
   password1.nickname === password2.nickname &&
   password1.username === password2.username &&
-  password1.passwordText === password2.passwordText &&
+  password1.password === password2.password &&
   password1.tag === password2.tag;
 
 export const getPasswordListsEqual = (

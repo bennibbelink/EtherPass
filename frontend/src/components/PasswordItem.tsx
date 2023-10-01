@@ -13,7 +13,14 @@ type Props = {
 };
 
 const PasswordItem = ({ password, handleDelete, handleEdit }: Props) => {
-  const { id, passwordText, domain, username, tag, nickname } = password;
+  const {
+    id,
+    password: passwordText,
+    domain,
+    username,
+    tag,
+    nickname,
+  } = password;
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const copyPassword = async () => {
@@ -24,7 +31,7 @@ const PasswordItem = ({ password, handleDelete, handleEdit }: Props) => {
     }
   };
 
-  const togglePasswordText = () => {
+  const togglepassword = () => {
     setPasswordVisible(!passwordVisible);
   };
 
@@ -51,7 +58,7 @@ const PasswordItem = ({ password, handleDelete, handleEdit }: Props) => {
             </div>
             <div className="flex gap-4 mr-4">
               <PasswordButton
-                onClick={togglePasswordText}
+                onClick={togglepassword}
                 icon={<AiOutlineEye className="w-5 h-5" />}
               />
               <PasswordButton

@@ -1,6 +1,6 @@
 export type Password = {
   id: number;
-  passwordText: string;
+  password: string;
   nickname: string;
   username: string;
   domain: string;
@@ -10,7 +10,7 @@ export type Password = {
 export const testPasswords = [
   {
     id: 1,
-    passwordText: "123456",
+    password: "123456",
     username: "tonadr1022",
     nickname: "Google",
     domain: "google.com",
@@ -18,7 +18,7 @@ export const testPasswords = [
   },
   {
     id: 2,
-    passwordText: "123456",
+    password: "123456",
 
     username: "tonadr1022",
     nickname: "ESPN",
@@ -27,7 +27,7 @@ export const testPasswords = [
   },
   {
     id: 3,
-    passwordText: "234234234",
+    password: "234234234",
     username: "tonadr1022",
     nickname: "Yahoo",
     domain: "espn.com",
@@ -35,7 +35,7 @@ export const testPasswords = [
   },
   {
     id: 4,
-    passwordText: "123456",
+    password: "123456",
     username: "adflsdf",
     nickname: "Google2",
     domain: "yahoo.com",
@@ -43,7 +43,7 @@ export const testPasswords = [
   },
   // {
   //   id: 5,
-  //   passwordText: "123456",
+  //   password: "123456",
   //   username: "tonadr1022",
   //   nickname: "Google",
   //   domain: "google.com",
@@ -51,7 +51,7 @@ export const testPasswords = [
   // },
   // {
   //   id: 6,
-  //   passwordText: "123456",
+  //   password: "123456",
 
   //   username: "tonadr1022",
   //   nickname: "ESPN",
@@ -60,7 +60,7 @@ export const testPasswords = [
   // },
   // {
   //   id: 7,
-  //   passwordText: "234234234",
+  //   password: "234234234",
   //   username: "tonadr1022",
   //   nickname: "Yahoo",
   //   domain: "espn.com",
@@ -68,7 +68,7 @@ export const testPasswords = [
   // },
   // {
   //   id: 8,
-  //   passwordText: "123456",
+  //   password: "123456",
   //   username: "adflsdf",
   //   nickname: "Google2",
   //   domain: "yahoo.com",
