@@ -11,7 +11,7 @@ struct Password {
 
 contract Registry {
     // the current next id for a Password
-    uint currId = 1;
+    uint currId = 0;
 
     // the number of passwords in the registry
     uint numPasswords = 0;

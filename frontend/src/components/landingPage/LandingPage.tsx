@@ -81,10 +81,10 @@ const LandingPage = () => {
           Create Registry
         </button>
       )}
-
+{/* 
       <button className="btn" onClick={deleteRegistry}>
         Delete Registry
-      </button>
+      </button> */}
     </div>
   );
 };
