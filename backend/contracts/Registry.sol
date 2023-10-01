@@ -42,7 +42,19 @@ contract Registry {
         return _passwords;
     }
 
-    function addPassword(string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
+    function batchUpdate(Password[] memory adds, uint[] memory deletes, Password[] memory updates) public {
+        for (uint i = 0; i < adds.length; i++) {
+            addPassword(adds[i].nickname, adds[i].password, adds[i].username, adds[i].domain, adds[i].tag);
+        }
+        for (uint i = 0; i < deletes.length; i++) {
+            deletePassword(deletes[i]);
+        }
+        for (uint i = 0; i < updates.length; i++) {
+            updatePassword(updates[i].id, updates[i].nickname, updates[i].password, updates[i].username, updates[i].domain, updates[i].tag);
+        }
+    }
+
+    function addPassword(string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) private {
         // only the owner of the registry can add a password
         require(msg.sender == owner, "Only the owner can add a password");
         // create a new Password struct
@@ -55,7 +67,7 @@ contract Registry {
         numPasswords++;
     }
 
-    function updatePassword(uint id, string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) public {
+    function updatePassword(uint id, string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) private {
         // only the owner of the registry can update a password
         require(msg.sender == owner, "Only the owner can update a password");
         // make sure the password exists
@@ -68,7 +80,7 @@ contract Registry {
         passwords[id].tag = _tag;
     }
 
-    function deletePassword(uint id) public {
+    function deletePassword(uint id) private {
         // only the owner of the registry can delete a password
         require(msg.sender == owner, "Only the owner can delete a password");
         // make sure the password exists
