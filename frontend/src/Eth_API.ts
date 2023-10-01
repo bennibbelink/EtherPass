@@ -8,6 +8,7 @@ import {
   http,
   createWalletClient,
   custom,
+  webSocket,
 } from "viem";
 import { mainnet, goerli } from "viem/chains";
 import { Password } from "./testData";
@@ -15,11 +16,6 @@ import { Password } from "./testData";
 const CURRENT_CHAIN = goerli;
 const GOERLI_PROXY_ADDRESS = "0x1b617212CBb12A0d2688dC635f33d568ba5fd3Ad";
 const publicClient = createPublicClient({
-  //   batch: {
-  //     multicall: {
-  //       wait: 1000,
-  //     },
-  //   },
   chain: CURRENT_CHAIN,
   transport: http(),
 });
