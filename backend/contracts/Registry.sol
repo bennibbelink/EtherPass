@@ -11,7 +11,7 @@ struct Password {
 
 contract Registry {
     // the current next id for a Password
-    uint currId = 1;
+    uint currId = 0;
 
     // the number of passwords in the registry
     uint numPasswords = 0;
@@ -34,9 +34,9 @@ contract Registry {
         require(msg.sender == owner, "Only the owner can get passwords");
         Password[] memory _passwords = new Password[](numPasswords);
         // iterate through all the passwords up to currId
-        for (uint i = 1; i < currId; i++) {
+        for (uint i = 0; i < currId; i++) {
             if (!isPasswordEmpty(i)) {
-                _passwords[i - 1] = passwords[i];
+                _passwords[i] = passwords[i];
             }
         }
         return _passwords;
@@ -125,8 +125,8 @@ contract Registry {
         require(!isPasswordEmpty(id), "Password does not exist");
         // delete the password
         delete passwords[id];
-        // decrement the number of passwords
-        numPasswords--;
+
+        numPasswords --;
     }
 
     function isPasswordEmpty(uint id) private view returns (bool) {
