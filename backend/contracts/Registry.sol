@@ -10,7 +10,6 @@ struct Password {
 }
 
 contract Registry {
-
     // the current next id for a Password
     uint currId = 1;
 
@@ -24,7 +23,7 @@ contract Registry {
     address private owner;
 
     // maps the Password id to the Password struct
-    mapping (uint => Password) public passwords;
+    mapping(uint => Password) public passwords;
 
     constructor(address _owner) {
         owner = _owner;
@@ -37,30 +36,60 @@ contract Registry {
         // iterate through all the passwords up to currId
         for (uint i = 1; i < currId; i++) {
             if (!isPasswordEmpty(i)) {
-                _passwords[i] = passwords[i];
+                _passwords[i - 1] = passwords[i];
             }
         }
         return _passwords;
     }
 
-    function batchUpdate(Password[] memory adds, uint[] memory deletes, Password[] memory updates) public {
+    function batchUpdate(
+        Password[] memory adds,
+        uint[] memory deletes,
+        Password[] memory updates
+    ) public {
         require(msg.sender == owner, "Only the owner can batch update");
         for (uint i = 0; i < adds.length; i++) {
-            addPassword(adds[i].nickname, adds[i].password, adds[i].username, adds[i].domain, adds[i].tag);
+            addPassword(
+                adds[i].nickname,
+                adds[i].password,
+                adds[i].username,
+                adds[i].domain,
+                adds[i].tag
+            );
         }
         for (uint i = 0; i < deletes.length; i++) {
             deletePassword(deletes[i]);
         }
         for (uint i = 0; i < updates.length; i++) {
-            updatePassword(updates[i].id, updates[i].nickname, updates[i].password, updates[i].username, updates[i].domain, updates[i].tag);
+            updatePassword(
+                updates[i].id,
+                updates[i].nickname,
+                updates[i].password,
+                updates[i].username,
+                updates[i].domain,
+                updates[i].tag
+            );
         }
     }
 
-    function addPassword(string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) private {
+    function addPassword(
+        string memory _nickname,
+        string memory _password,
+        string memory _username,
+        string memory _domain,
+        uint16 _tag
+    ) private {
         // only the owner of the registry can add a password
         require(msg.sender == owner, "Only the owner can add a password");
         // create a new Password struct
-        Password memory p = Password(currId, _nickname, _password, _username, _domain, _tag);
+        Password memory p = Password(
+            currId,
+            _nickname,
+            _password,
+            _username,
+            _domain,
+            _tag
+        );
         // add the password to the registry
         passwords[currId] = p;
         // increment the current id
@@ -69,7 +98,14 @@ contract Registry {
         numPasswords++;
     }
 
-    function updatePassword(uint id, string memory _nickname, string memory _password, string memory _username, string memory _domain, uint16 _tag) private {
+    function updatePassword(
+        uint id,
+        string memory _nickname,
+        string memory _password,
+        string memory _username,
+        string memory _domain,
+        uint16 _tag
+    ) private {
         // only the owner of the registry can update a password
         require(msg.sender == owner, "Only the owner can update a password");
         // make sure the password exists
@@ -95,12 +131,12 @@ contract Registry {
 
     function isPasswordEmpty(uint id) private view returns (bool) {
         Password memory p = passwords[id];
-        return p.id == 0 && 
+        return
+            p.id == 0 &&
             keccak256(bytes(p.nickname)) == keccak256(bytes("")) &&
-            keccak256(bytes(p.password)) == keccak256(bytes("")) && 
-            keccak256(bytes(p.username)) == keccak256(bytes("")) && 
-            keccak256(bytes(p.domain)) == keccak256(bytes(""))  && 
+            keccak256(bytes(p.password)) == keccak256(bytes("")) &&
+            keccak256(bytes(p.username)) == keccak256(bytes("")) &&
+            keccak256(bytes(p.domain)) == keccak256(bytes("")) &&
             p.tag == 0;
     }
-
 }
