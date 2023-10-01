@@ -12,7 +12,7 @@ struct Password {
 contract Registry {
 
     // the current next id for a Password
-    uint currId = 0;
+    uint currId = 1;
 
     // the number of passwords in the registry
     uint numPasswords = 0;
@@ -32,9 +32,10 @@ contract Registry {
     }
 
     function getPasswords() public view returns (Password[] memory) {
+        require(msg.sender == owner, "Only the owner can get passwords");
         Password[] memory _passwords = new Password[](numPasswords);
         // iterate through all the passwords up to currId
-        for (uint i = 0; i < currId; i++) {
+        for (uint i = 1; i < currId; i++) {
             if (!isPasswordEmpty(i)) {
                 _passwords[i] = passwords[i];
             }
@@ -43,6 +44,7 @@ contract Registry {
     }
 
     function batchUpdate(Password[] memory adds, uint[] memory deletes, Password[] memory updates) public {
+        require(msg.sender == owner, "Only the owner can batch update");
         for (uint i = 0; i < adds.length; i++) {
             addPassword(adds[i].nickname, adds[i].password, adds[i].username, adds[i].domain, adds[i].tag);
         }
