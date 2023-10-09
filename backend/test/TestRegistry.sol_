@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+// These files are dynamically created at test time
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/Registry.sol";
+import "../contracts/Proxy.sol";
+
+contract TestMetaCoin {
+
+  function testCreateRegistry() public {
+    // MetaCoin meta = MetaCoin(DeployedAddresses.MetaCoin());
+    Proxy proxy = Proxy();
+    Registry reg = proxy.createRegistry();
+    Password[] memory passes = reg.getPasswords();
+
+    Assert.equal(passes, empty(Password[]), "Owner should have 10000 MetaCoin initially");
+
+  }
+
+//   function testInitialBalanceWithNewMetaCoin() public {
+//     MetaCoin meta = new MetaCoin();
+
+//     uint expected = 10000;
+
+//     Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 MetaCoin initially");
+//   }
+
+}

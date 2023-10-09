@@ -9,6 +9,7 @@ import {
 } from "./context/PasswordListContext";
 
 import LandingPage from "./components/landingPage/LandingPage";
+
 function App() {
   const { hasRegistry } = useContext(PasswordListContext);
   return (
@@ -28,6 +29,7 @@ function App() {
       )}
     </>
   );
+
 }
 
 export default App;

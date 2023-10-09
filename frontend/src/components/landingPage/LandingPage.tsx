@@ -1,11 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { createRegistry, getPasswords, deleteRegistry } from "../../Eth_API";
+// import { createRegistry, getPasswords, deleteRegistry } from "../../Eth_API";
 import { PasswordListContext } from "../../context/PasswordListContext";
+import { EthContext } from "../../context/EthContext";
 const LandingPage = () => {
   const hasMetaMask = useRef(false);
   const onboarding = new MetaMaskOnboarding();
   const { hasRegistry, setHasRegistry } = useContext(PasswordListContext);
+  const { createRegistry, getPasswords } = useContext(EthContext)
 
   const [startPolling, setStartPolling] = useState(false);
   async function onClickConnect() {
@@ -81,7 +83,7 @@ const LandingPage = () => {
           Create Registry
         </button>
       )}
-{/* 
+      {/* 
       <button className="btn" onClick={deleteRegistry}>
         Delete Registry
       </button> */}

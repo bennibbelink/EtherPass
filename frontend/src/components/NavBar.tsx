@@ -18,7 +18,7 @@ const NavBar = () => {
   };
 
   const onSaveClick = async () => {
-    await commitChanges();
+    commitChanges();
     console.log("updated data and make request");
   };
 

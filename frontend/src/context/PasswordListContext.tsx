@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Password } from "../testData";
-import { batchUpdate, account, getPasswords } from "../Eth_API";
+import { EthContext } from "./EthContext";
 
 interface PasswordListContextValue {
   passwordList: Password[];
@@ -16,10 +16,10 @@ const PasswordListContext = createContext<PasswordListContextValue>({
   passwordList: [],
   initialPasswordList: [],
   hasRegistry: false,
-  setPasswordList: () => {},
-  setHasRegistry: () => {},
-  setInitialPasswordList: () => {},
-  commitChanges: () => {},
+  setPasswordList: () => { },
+  setHasRegistry: () => { },
+  setInitialPasswordList: () => { },
+  commitChanges: () => { },
 });
 
 const PasswordListContextProvider = ({
@@ -33,6 +33,8 @@ const PasswordListContextProvider = ({
   );
   const [hasRegistry, setHasRegistry] = useState<boolean>(false);
 
+  const { getPasswords, account, batchUpdate } = useContext(EthContext);
+
   useEffect(() => {
     if (account) {
       getPasswords().then((passwords: Password[]) => {
@@ -43,14 +45,20 @@ const PasswordListContextProvider = ({
     }
   }, [account]);
 
+
+
   const commitChanges = async () => {
     const adds: Password[] = [];
     const updates: Password[] = [];
     const deletes: number[] = [];
 
+    console.log("persisted", initialPasswordList);
+    console.log("ephemeral", passwordList)
+
     passwordList.forEach((p: Password) => {
       // first find the password with the same id
-      const initialP = initialPasswordList.find((p: Password) => p.id === p.id);
+      const initialP = initialPasswordList.find((pa: Password) => pa.id === p.id);
+      console.log(initialP,  "initalp")
       if (initialP !== undefined) {
         // this id exists
         if (!isEqual(p, initialP)) {
@@ -65,22 +73,26 @@ const PasswordListContextProvider = ({
 
     // check the persisted paswords for any that have been deleted
     initialPasswordList.forEach((p: Password) => {
-      if (passwordList.find((p: Password) => p.id === p.id) === undefined) {
+      if (passwordList.find((pa: Password) => pa.id === p.id) === undefined) {
         deletes.push(p.id);
       }
     });
 
-    await batchUpdate(adds, deletes, updates);
+    console.log("adds", adds)
+    console.log("deletes", deletes)
+    console.log("updates", updates)
+
+    batchUpdate(adds, deletes, updates);
   };
 
   function isEqual(a: Password, b: Password) {
     return (
-      a.id === b.id &&
-      a.nickname === b.nickname &&
-      a.username === b.username &&
-      a.password === b.password &&
-      a.domain === b.domain &&
-      a.tag === b.tag
+      a.id == b.id &&
+      a.nickname == b.nickname &&
+      a.username == b.username &&
+      a.password == b.password &&
+      a.domain == b.domain &&
+      a.tag == b.tag
     );
   }
 
